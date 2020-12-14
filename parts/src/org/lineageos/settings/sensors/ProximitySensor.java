@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.doze;
+package org.lineageos.settings.sensors;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -23,6 +23,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+
+import org.lineageos.settings.doze.DozeUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,13 +40,11 @@ public class ProximitySensor implements SensorEventListener {
 
     // Minimum time until the device is considered to have been in the pocket: 2s
     private static final int POCKET_MIN_DELTA_NS = 2000 * 1000 * 1000;
-
+    private boolean mSawNear = false;
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private Context mContext;
     private ExecutorService mExecutorService;
-
-    private boolean mSawNear = false;
     private long mInPocketTime = 0;
 
     public ProximitySensor(Context context) {
@@ -90,7 +90,7 @@ public class ProximitySensor implements SensorEventListener {
         /* Empty */
     }
 
-    protected void enable() {
+    public void enable() {
         if (DEBUG) Log.d(TAG, "Enabling");
         submit(() -> {
             mSensorManager.registerListener(this, mSensor,
@@ -98,10 +98,14 @@ public class ProximitySensor implements SensorEventListener {
         });
     }
 
-    protected void disable() {
+    public void disable() {
         if (DEBUG) Log.d(TAG, "Disabling");
         submit(() -> {
             mSensorManager.unregisterListener(this, mSensor);
         });
+    }
+
+    public boolean getSawNear() {
+        return mSawNear;
     }
 }

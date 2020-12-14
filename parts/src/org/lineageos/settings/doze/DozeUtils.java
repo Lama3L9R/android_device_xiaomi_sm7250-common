@@ -20,8 +20,6 @@ package org.lineageos.settings.doze;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -88,7 +86,7 @@ public final class DozeUtils {
                 DOZE_ENABLED, 1) != 0;
     }
 
-    protected static void wakeOrLaunchDozePulse(Context context) {
+    public static void wakeOrLaunchDozePulse(Context context) {
         if (isWakeOnGestureEnabled(context)) {
             if (DEBUG) Log.d(TAG, "Wake up display");
             PowerManager powerManager = context.getSystemService(PowerManager.class);
@@ -123,33 +121,24 @@ public final class DozeUtils {
                 .getBoolean(gesture, false);
     }
 
-    protected static boolean isWakeOnGestureEnabled(Context context) {
+    public static boolean isWakeOnGestureEnabled(Context context) {
         return isGestureEnabled(context, WAKE_ON_GESTURE_KEY);
     }
 
-    protected static boolean isPickUpEnabled(Context context) {
+    public static boolean isPickUpEnabled(Context context) {
         return isGestureEnabled(context, GESTURE_PICK_UP_KEY);
     }
 
-    protected static boolean isHandwaveGestureEnabled(Context context) {
+    public static boolean isHandwaveGestureEnabled(Context context) {
         return isGestureEnabled(context, GESTURE_HAND_WAVE_KEY);
     }
 
-    protected static boolean isPocketGestureEnabled(Context context) {
+    public static boolean isPocketGestureEnabled(Context context) {
         return isGestureEnabled(context, GESTURE_POCKET_KEY);
     }
 
     public static boolean sensorsEnabled(Context context) {
         return isPickUpEnabled(context) || isHandwaveGestureEnabled(context)
                 || isPocketGestureEnabled(context);
-    }
-
-    protected static Sensor getSensor(SensorManager sm, String type) {
-        for (Sensor sensor : sm.getSensorList(Sensor.TYPE_ALL)) {
-            if (type.equals(sensor.getStringType())) {
-                return sensor;
-            }
-        }
-        return null;
     }
 }
