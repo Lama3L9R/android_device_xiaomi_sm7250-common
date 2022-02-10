@@ -347,4 +347,22 @@
     
     <!-- Path to fast charging status file to detect whether an oem fast charger is active -->
     <string name="config_oemFastChargerStatusPath" translatable="false">/sys/class/power_supply/bms/fastcharge_mode</string>
+
+   <!-- From Avengerhood/android_device_xiaomi_sm7250-common/dot commit: 25111660a26d44b98f4783a0adc1eb051a7b59e9 -->
+
+<!-- Pocket Lock -->
+    <bool name="config_pocketUseLightSensor">false</bool>
+
+    <!-- Smart charging -->
+    <integer name="config_smartChargingBatteryLevel">80</integer>
+    <string name="config_SmartChargingSysfsNode" translatable="false">/sys/class/power_supply/battery/input_suspend</string>
+    <string name="config_SmartChargingSuspendValue" translatable="false">1</string>
+    <string name="config_SmartChargingResumeValue" translatable="false">0</string>
+
+<!-- Enable battery percentage setting -->
+    <bool name="config_battery_percentage_setting_available" translatable="false">true</bool>
+
+
+  <!-- Shows the required view for in-display fingerprint -->
+    <bool name="config_supportsInDisplayFingerprint">true</bool>
 </resources>
